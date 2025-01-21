@@ -1,12 +1,24 @@
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { GlobalStyle } from './theme/GlobalStyles';
+import useDarkmode from './hooks/useDarkmode';
+import Header from './components/Header/Header';
+import Main from './app/main/Main';
 
 function App() {
+  const { theme } = useDarkmode();
 
   return (
-    <>
-      <h1>그리디 미션 : 뉴스 웹 뷰어 시이작!</h1>
-    </>
-  )
+    <BrowserRouter>
+      <GlobalStyle theme={theme} />
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Navigate to="/all" />} />
+          <Route path="/:category" element={<Main />}></Route>
+        </Routes>
+      </main>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
