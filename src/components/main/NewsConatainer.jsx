@@ -1,48 +1,10 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useFetchNews } from "../../hooks/useFetchNews";
 import News from "./News";
 
 const NewsContainer = () => {
   const { category } = useParams();
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-        const apiUrl = import.meta.env.VITE_NEWS_API_URL;
-
-        if (!apiKey || !apiUrl) {
-          throw new Error("API 키 또는 URL이 설정되지 않았습니다.");
-        }
-
-        const selectedCategory = category?.toLowerCase();
-        const queryParam =
-          selectedCategory && selectedCategory !== "all"
-            ? `&category=${selectedCategory}`
-            : "";
-
-        const response = await fetch(
-          `${apiUrl}?country=us${queryParam}&apiKey=${apiKey}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP 오류! 상태: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setArticles(data.articles);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
-  }, [category]);
+  const { articles, loading, error } = useFetchNews(category);
 
   if (loading) {
     return (
