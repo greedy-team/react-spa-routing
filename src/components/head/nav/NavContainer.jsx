@@ -1,4 +1,4 @@
-import NEWS_CATEGORYLIST from "../../../type/category";
+import NEWS_CATEGORYLIST from "../../../constant/category";
 import NavLink from "./NavLink";
 
 const NavContainer = () => {

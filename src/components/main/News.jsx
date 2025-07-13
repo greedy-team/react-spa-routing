@@ -16,49 +16,53 @@ const News = ({ article }) => {
     );
   }
 
-  const handleClick = () => {
-    if (article.url) {
-      window.open(article.url, "_blank", "noopener noreferrer");
-    }
-  };
+  const articleUrl = article.url || "#";
 
   return (
-    <div
+    <a
+      href={articleUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`
         flex flex-col md:flex-row bg-white dark:bg-gray-800 text-black dark:text-white 
-        rounded-xl overflow-hidden transition-shadow duration-400 ease-in-out cursor-pointer 
+        rounded-xl overflow-hidden transition-shadow duration-400 ease-in-out 
         ${
           theme === "dark"
             ? "shadow-xs shadow-gray-600 hover:shadow-md"
             : "shadow-md hover:shadow-xl"
-        }`}
-      onClick={handleClick}
-      role="link"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") handleClick();
+        }
+        ${
+          article.url ? "cursor-pointer" : "cursor-default"
+        } // Change cursor based on URL availability
+      `}
+      onClick={(e) => {
+        if (!article.url) {
+          e.preventDefault();
+        }
       }}
     >
       {article.urlToImage && showImage && (
         <div className="md:w-1/4">
           <img
             src={article.urlToImage}
-            alt={article.title}
+            alt={article.title || "뉴스 이미지"}
             className="w-full h-48 md:h-full object-cover"
             onError={() => setShowImage(false)}
           />
         </div>
       )}
       <div className="p-4 md:w-3/4">
-        <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
+        <h2 className="text-2xl font-bold mb-2">
+          {article.title || "제목이 제공되지 않았습니다."}
+        </h2>
         <p className="text-gray-700 dark:text-gray-400 mb-2 line-clamp-3">
-          {article.description || ""}
+          {article.description || "설명이 제공되지 않았습니다."}
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           출처: {article.source.name || "출처가 명시되어 있지 않습니다."}
         </p>
       </div>
-    </div>
+    </a>
   );
 };
 

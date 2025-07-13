@@ -1,14 +1,19 @@
-// src/store/useThemeStore.js
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useThemeStore = create((set) => ({
-  theme: localStorage.getItem("theme") || "light",
-  toggleTheme: () =>
-    set((state) => {
-      const newTheme = state.theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme);
-      return { theme: newTheme };
+const useThemeStore = create(
+  persist(
+    (set) => ({
+      theme: "light",
+      toggleTheme: () =>
+        set((state) => ({
+          theme: state.theme === "light" ? "dark" : "light",
+        })),
     }),
-}));
+    {
+      name: "theme-storage", // localStorage key
+    }
+  )
+);
 
 export default useThemeStore;
