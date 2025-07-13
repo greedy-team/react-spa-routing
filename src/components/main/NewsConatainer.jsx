@@ -22,8 +22,11 @@ const NewsContainer = () => {
 
   return (
     <div className="container mx-auto p-4 grid gap-6">
-      {articles.map((article) => (
-        <News key={article.url || Math.random()} article={article} />
+      {articles.map((article, index) => (
+        <News
+          key={article.url || `${article.publishedAt}-${index}`}
+          article={article}
+        />
       ))}
     </div>
   );
