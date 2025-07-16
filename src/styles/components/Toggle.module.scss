@@ -1,0 +1,50 @@
+.toggleWrapper {
+  position: absolute;
+  right: 2rem;
+  top: 1.25rem;
+  cursor: pointer;
+  width: 5.2rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 3rem;
+  background-color: var(--gray500);
+  transition: background-color 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.4rem;
+  font-size: 1.2rem;
+}
+
+.toggleContainer.checked {
+  background-color: var(--gray200);
+}
+
+.icon {
+  z-index: 1;
+}
+
+.toggleCircle {
+  position: absolute;
+  top: 0.1rem;
+  left: 0.1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background-color: var(--white);
+  transition: left 0.3s;
+  z-index: 2;
+}
+
+.toggleCircle.checked {
+  left: 2.8rem;
+}

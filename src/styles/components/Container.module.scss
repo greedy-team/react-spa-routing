@@ -1,0 +1,18 @@
+@import "@/styles/variables";
+
+.base {
+  width: 75%;
+  margin: 0 auto;
+
+  @media screen and (max-width: $viewport-xl) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: $viewport-lg) {
+    width: 85%;
+  }
+
+  @media screen and (max-width: $viewport-md) {
+    width: 90%;
+  }
+}
