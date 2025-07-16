@@ -1,12 +1,21 @@
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Gnb from "./components/headers/Gnb";
+import NewsListPage from "./pages/newsListPage";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 function App() {
-
   return (
     <>
-      <h1>그리디 미션 : 뉴스 웹 뷰어 시이작!</h1>
+      <Gnb />
+      <main>
+        <Routes>
+          <Route path="/" element={<NewsListPage />} />
+          <Route path="/news/:category" element={<NewsListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
