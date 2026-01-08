@@ -1,21 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Link, useParams } from 'react-router-dom';
-import NewsCard from './main/newsCard.jsx';
+import { Routes, Route,  useParams } from 'react-router-dom';
+import NewsCard from './components/main/newsCard.jsx';
 import axios from 'axios';
-
-// 카테고리 목록
-const CATEGORIES = ['business', 'entertainment', 'health', 'science', 'sports', 'technology'];
+import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
 
 function App() {
   return (
     <>
       <header>
-        <nav >
-          <Link to="/">전체</Link>
-          {CATEGORIES.map((category) => (
-            <Link key={category} to={`/${category}`}> {category}</Link>
-          ))}
-        </nav>
+        <HeaderNavigation/>
       </header>
 
       <main>
