@@ -1,53 +1,74 @@
 import { useState, useEffect } from 'react';
-import Card from './main/newsCard.jsx';
+import { Routes, Route, Link, useParams } from 'react-router-dom';
+import NewsCard from './main/newsCard.jsx';
 import axios from 'axios';
 
+// 카테고리 목록
+const CATEGORIES = ['business', 'entertainment', 'health', 'science', 'sports', 'technology'];
+
 function App() {
-  const [fetchdedArticles, setFetchdedArticles] = useState(null);
+  return (
+    <>
+      <header>
+        <nav >
+          <Link to="/">전체</Link>
+          {CATEGORIES.map((category) => (
+            <Link key={category} to={`/${category}`}> {category}</Link>
+          ))}
+        </nav>
+      </header>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<NewsCardList />} />
+          <Route path="/:category" element={<NewsCardList />} />
+        </Routes>
+      </main>
+
+      <footer>푸터</footer>
+    </>
+  );
+}
+
+function NewsCardList() {
+  const { category } = useParams();
+  const [fetchedArticles, setFetchedArticles] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchedData = async () => {
+    const fetchArticles = async () => {
       setIsLoading(true);
       try {
         const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-        const searchKeyword = 'test';
 
-        const response = await axios.get(
-          `https://newsapi.org/v2/everything?q=${searchKeyword}&apiKey=${apiKey}`,
-        );
+        const url = category
+          ? `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
+          : `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
-        console.log('전체 응답 데이터:', response.data);
-        setFetchdedArticles(response.data.articles);
+        const response = await axios.get(url);
+
+        console.log('응답 데이터:', response.data);
+        setFetchedArticles(response.data.articles);
 
       } catch (error) {
         console.error('에러 발생:', error);
       }
+
       setIsLoading(false);
     };
 
-    fetchedData();
-  }, []);
+    fetchArticles();
+  }, [category]);
 
   if (isLoading) {
     return <div>뉴스를 불러오는 중입니다...</div>;
   }
 
-  if (!fetchdedArticles) {
+  if (!fetchedArticles) {
     return <div>뉴스가 없습니다.</div>;
   }
 
-  return (
-    <>
-      <header></header>
-
-      <main>
-        <Card articles={fetchdedArticles} />
-      </main>
-
-      <footer></footer>
-    </>
-  );
+  return <NewsCard articles={fetchedArticles} />;
 }
 
 export default App;
