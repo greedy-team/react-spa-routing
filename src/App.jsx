@@ -1,9 +1,8 @@
-import { Routes, Route, useParams } from 'react-router-dom';
-import NewsCard from './components/main/newsCard.jsx';
+import { Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer/index.jsx';
 import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
 import GlobalStyle from '../GlobalStyle.js';
-import useNews from '../hooks/useNews.js';
+import NewsCardList from './components/main/NewsCardList.jsx';
 
 function App() {
   return (
@@ -21,31 +20,6 @@ function App() {
       <Footer/>
     </>
   );
-}
-
-function NewsCardList() {
-  const { category } = useParams();
-  const { data: articles, error, refetch } = useNews(category);
-
-  if (articles) {
-    return <NewsCard articles={articles} />;
-  }
-
-  if (error) {
-    return (
-      <>
-        <div>에러가 발생했습니다 다시한번 시도해 주세요</div>
-        <div>
-          <button style={{ width: 'auto' }} onClick={() => refetch()}>
-            재시도
-          </button>
-        </div>
-      </>
-    );
-
-  }
-
-  return <div>로딩 중... ⏳</div>;
 }
 
 export default App;
