@@ -5,8 +5,8 @@ const FooterContainer = styled.footer`
   justify-content: center;
   gap: 20px;
   padding: 20px;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: ${props => props.theme.card};
+  border-top: 1px solid ${props => props.theme.border};
 `;
 
 const FooterText = styled.span`

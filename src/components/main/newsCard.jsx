@@ -4,16 +4,16 @@ import Masonry from 'react-masonry-css';
 
 const CardContainer = styled.div`
   max-width: 400px;
-  border: 1px solid #000000ff;
+  border: 1px solid ${props => props.theme.border};
   border-radius: 8px;
   padding: 16px;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.card};
   display: inline-block;
   margin: 8px;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 8px 8px #ccc; 
+    box-shadow: 0 8px 8px ${props => props.theme.shadow}; 
   }
 `;
 

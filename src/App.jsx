@@ -4,10 +4,12 @@ import NewsCard from './components/main/newsCard.jsx';
 import Footer from './components/Footer/index.jsx';
 import axios from 'axios';
 import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
+import GlobalStyle from '../GlobalStyle.js';
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <HeaderNavigation/>
 
       <main>
