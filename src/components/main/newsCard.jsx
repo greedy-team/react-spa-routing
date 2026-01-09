@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Masonry from 'react-masonry-css';
 
 const CardContainer = styled.div`
-  width: 300px;
+  max-width: 400px;
   border: 1px solid #000000ff;
   border-radius: 8px;
   padding: 16px;
@@ -34,11 +35,17 @@ const CardDescription = styled.div`
   opacity: 0.5; 
 `;
 
-const CardGrid = styled.div`
+const StyledMasonry = styled(Masonry)`
+  display: flex;
   padding: 16px;
+
+  .masonry-column {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-const AticleCard = ({ article }) => {
+const ArticleCard = ({ article }) => {
   const [imageError, setImageError] = useState(false);
 
   return (
@@ -57,12 +64,22 @@ const AticleCard = ({ article }) => {
 };
 
 const NewsCard = ({ articles }) => {
+  const breakpointCols = {
+    default: 4,
+    1200: 3,
+    900: 2,
+    600: 1,
+  };
+
   return (
-    <CardGrid>
+    <StyledMasonry
+      breakpointCols={breakpointCols}
+      columnClassName="masonry-column"
+    >
       {articles.map((article) => (
-        <AticleCard key={article.url} article={article} />
+        <ArticleCard key={article.url} article={article} />
       ))}
-    </CardGrid>
+    </StyledMasonry>
   );
 };
 
