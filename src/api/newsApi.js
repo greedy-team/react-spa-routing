@@ -8,7 +8,7 @@ const newsApi = {
     const url = category
       ? `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
       : `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-      
+
     const response = await axios.get(url);
     return response.data.articles;
   },
