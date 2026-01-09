@@ -1,15 +1,18 @@
 import axios from 'axios';
 
+const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+
+const api = axios.create({
+  baseURL: 'https://newsapi.org/v2',
+});
+
 const newsApi = {
   fetchNews: async (category) => {
-
-    const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-
     const url = category
-      ? `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
-      : `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+      ? `/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+      : `/top-headlines?country=us&apiKey=${API_KEY}`;
 
-    const response = await axios.get(url);
+    const response = await api.get(url);
     return response.data.articles;
   },
 };
