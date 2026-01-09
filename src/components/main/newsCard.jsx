@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const CardContainer = styled.div`
@@ -37,19 +38,29 @@ const CardGrid = styled.div`
   padding: 16px;
 `;
 
+const AticleCard = ({ article }) => {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <CardContainer onClick={() => window.open(article.url, '_blank')}>
+      {!imageError && article.urlToImage && (
+        <CardImage
+          src={article.urlToImage}
+          alt={article.title}
+          onError={() => setImageError(true)}
+        />
+      )}
+      <CardTitle>{article.title}</CardTitle>
+      <CardDescription>{article.description}</CardDescription>
+    </CardContainer>
+  );
+};
+
 const NewsCard = ({ articles }) => {
   return (
     <CardGrid>
       {articles.map((article) => (
-        <CardContainer key={article.url} onClick={() => window.open(article.url, '_blank')}>
-          <CardImage
-            src={article.urlToImage || '/no-image.png'}
-            alt={article.title}
-            onError={(e) => { e.target.src = '/no-image.png'; }}
-          />
-          <CardTitle>{article.title}</CardTitle>
-          <CardDescription>{article.description}</CardDescription>
-        </CardContainer>
+        <AticleCard key={article.url} article={article} />
       ))}
     </CardGrid>
   );
