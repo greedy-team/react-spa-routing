@@ -16,7 +16,7 @@ function DarkModeButton() {
 
   return (
     <Button onClick={toggleTheme}>
-      {isDark ? '라이트' : '다크'}
+      {isDark ? '라이트모드' : '다크모드'}
     </Button>
   );
 }
