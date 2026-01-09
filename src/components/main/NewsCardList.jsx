@@ -6,7 +6,7 @@ import NewsCard from './newsCard';
 function NewsCardList() {
   const { category } = useParams();
   const [articles, setArticles] = useState(null);
-  const [isLoding, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchArticles = async () => {
@@ -25,8 +25,8 @@ function NewsCardList() {
     fetchArticles();
   }, [category]);
 
-  if (articles) {
-    return <NewsCard articles={articles} />;
+  if (isLoading) {
+    return <div>로딩 중... ⏳</div>;
   }
 
   if (error) {
@@ -41,9 +41,12 @@ function NewsCardList() {
       </>
     );
   }
-  if (isLoding) {
-    return <div>로딩 중... ⏳</div>;
+
+  if (articles) {
+    return <NewsCard articles={articles} />;
   }
+
+  return <div>데이터가 없습니다.</div>;
 }
 
 export default NewsCardList;
