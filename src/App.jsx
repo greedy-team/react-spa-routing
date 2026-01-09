@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Routes, Route,  useParams } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import NewsCard from './components/main/newsCard.jsx';
 import Footer from './components/Footer/index.jsx';
-import axios from 'axios';
 import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
 import GlobalStyle from '../GlobalStyle.js';
+import useNews from '../hooks/useNews.js';
 
 function App() {
   return (
@@ -26,43 +25,27 @@ function App() {
 
 function NewsCardList() {
   const { category } = useParams();
-  const [fetchedArticles, setFetchedArticles] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: articles, error, refetch } = useNews(category);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      setIsLoading(true);
-      try {
-        const apiKey = import.meta.env.VITE_NEWS_API_KEY;
-
-        const url = category
-          ? `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
-          : `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-
-        const response = await axios.get(url);
-
-        console.log('응답 데이터:', response.data);
-        setFetchedArticles(response.data.articles);
-
-      } catch (error) {
-        console.error('에러 발생:', error);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchArticles();
-  }, [category]);
-
-  if (isLoading) {
-    return <div>뉴스를 불러오는 중입니다...</div>;
+  if (articles) {
+    return <NewsCard articles={articles} />;
   }
 
-  if (!fetchedArticles) {
-    return <div>뉴스가 없습니다.</div>;
+  if (error) {
+    return (
+      <>
+        <div>에러가 발생했습니다 다시한번 시도해 주세요</div>
+        <div>
+          <button style={{ width: 'auto' }} onClick={() => refetch()}>
+            재시도
+          </button>
+        </div>
+      </>
+    );
+
   }
 
-  return <NewsCard articles={fetchedArticles} />;
+  return <div>로딩 중... ⏳</div>;
 }
 
 export default App;
