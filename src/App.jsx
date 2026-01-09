@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route,  useParams } from 'react-router-dom';
 import NewsCard from './components/main/newsCard.jsx';
+import Footer from './components/Footer/index.jsx';
 import axios from 'axios';
 import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
 
 function App() {
   return (
     <>
-      <header>
-        <HeaderNavigation/>
-      </header>
+      <HeaderNavigation/>
 
       <main>
         <Routes>
@@ -18,7 +17,7 @@ function App() {
         </Routes>
       </main>
 
-      <footer>푸터</footer>
+      <Footer/>
     </>
   );
 }
