@@ -15,7 +15,7 @@ const FooterText = styled.span`
 `;
 
 const FooterLink = styled.a`
-  color: #ffffff;
+  color: ${props => props.theme.text};
 `;
 
 const Footer = () => {
