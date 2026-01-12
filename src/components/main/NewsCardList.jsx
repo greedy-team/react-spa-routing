@@ -1,40 +1,22 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
 import newsApi from '../../api/newsApi';
 import NewsCard from './newsCard';
 
 function NewsCardList() {
   const { category } = useParams();
-  const [articles, setArticles] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const fetchedNews = useFetch(() => newsApi.fetchNews(category), [category]);
 
-  const fetchArticles = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await newsApi.fetchNews(category);
-      setArticles(data);
-    } catch (err) {
-      setError(err);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchArticles();
-  }, [category]);
-
-  if (isLoading) {
+  if (fetchedNews.isLoading) {
     return <div>로딩 중... ⏳</div>;
   }
 
-  if (error) {
+  if (fetchedNews.error) {
     return (
       <>
         <div>에러가 발생했습니다 다시한번 시도해 주세요</div>
         <div>
-          <button style={{ width: 'auto' }} onClick={fetchArticles}>
+          <button style={{ width: 'auto' }} onClick={fetchedNews.refetch}>
             재시도
           </button>
         </div>
@@ -42,8 +24,8 @@ function NewsCardList() {
     );
   }
 
-  if (articles) {
-    return <NewsCard articles={articles} />;
+  if (fetchedNews.data) {
+    return <NewsCard articles={fetchedNews.data} />;
   }
 
   return <div>데이터가 없습니다.</div>;
