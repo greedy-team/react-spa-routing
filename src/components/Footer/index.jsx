@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+const Footer = () => {
+  return (
+    <FooterContainer>
+      <FooterText>api by <FooterLink href="https://newsapi.org" target="_blank">NewsAPI</FooterLink></FooterText>
+      <FooterText>Made by yoonjaehong</FooterText>
+    </FooterContainer>
+  );
+};
+
+export default Footer;
+
 const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
@@ -17,14 +28,3 @@ const FooterText = styled.span`
 const FooterLink = styled.a`
   color: ${props => props.theme.text};
 `;
-
-const Footer = () => {
-  return (
-    <FooterContainer>
-      <FooterText>api by <FooterLink href="https://newsapi.org" target="_blank">NewsAPI</FooterLink></FooterText>
-      <FooterText>Made by yoonjaehong</FooterText>
-    </FooterContainer>
-  );
-};
-
-export default Footer;

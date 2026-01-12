@@ -2,6 +2,46 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-css';
 
+const ArticleCard = ({ article }) => {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <CardContainer onClick={() => window.open(article.url, '_blank')}>
+      {!imageError && article.urlToImage && (
+        <CardImage
+          src={article.urlToImage}
+          alt={article.title}
+          onError={() => setImageError(true)}
+        />
+      )}
+      <CardTitle>{article.title}</CardTitle>
+      <CardDescription>{article.description}</CardDescription>
+    </CardContainer>
+  );
+};
+
+const NewsCard = ({ articles }) => {
+  const breakpointCols = {
+    default: 4,
+    1200: 3,
+    900: 2,
+    600: 1,
+  };
+
+  return (
+    <StyledMasonry
+      breakpointCols={breakpointCols}
+      columnClassName="masonry-column"
+    >
+      {articles.map((article) => (
+        <ArticleCard key={article.url} article={article} />
+      ))}
+    </StyledMasonry>
+  );
+};
+
+export default NewsCard;
+
 const CardContainer = styled.div`
   max-width: 400px;
   border: 1px solid ${props => props.theme.border};
@@ -44,43 +84,3 @@ const StyledMasonry = styled(Masonry)`
     flex-direction: column;
   }
 `;
-
-const ArticleCard = ({ article }) => {
-  const [imageError, setImageError] = useState(false);
-
-  return (
-    <CardContainer onClick={() => window.open(article.url, '_blank')}>
-      {!imageError && article.urlToImage && (
-        <CardImage
-          src={article.urlToImage}
-          alt={article.title}
-          onError={() => setImageError(true)}
-        />
-      )}
-      <CardTitle>{article.title}</CardTitle>
-      <CardDescription>{article.description}</CardDescription>
-    </CardContainer>
-  );
-};
-
-const NewsCard = ({ articles }) => {
-  const breakpointCols = {
-    default: 4,
-    1200: 3,
-    900: 2,
-    600: 1,
-  };
-
-  return (
-    <StyledMasonry
-      breakpointCols={breakpointCols}
-      columnClassName="masonry-column"
-    >
-      {articles.map((article) => (
-        <ArticleCard key={article.url} article={article} />
-      ))}
-    </StyledMasonry>
-  );
-};
-
-export default NewsCard;
