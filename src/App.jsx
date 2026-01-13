@@ -1,12 +1,25 @@
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer/index.jsx';
+import HeaderNavigation from './components/Header/HeaderNavigation.jsx';
+import GlobalStyle from '../GlobalStyle.js';
+import NewsCardList from './components/main/NewsCardList.jsx';
 
 function App() {
-
   return (
     <>
-      <h1>그리디 미션 : 뉴스 웹 뷰어 시이작!</h1>
+      <GlobalStyle />
+      <HeaderNavigation/>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<NewsCardList />} />
+          <Route path="/:category" element={<NewsCardList />} />
+        </Routes>
+      </main>
+
+      <Footer/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
