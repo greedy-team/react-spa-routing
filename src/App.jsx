@@ -1,12 +1,17 @@
-import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './components/Layouts/MainLayout';
+import NewsPage from './components/NewsPage';
+import NotFoundLayout from './components/Layouts/NotFoundLayout';
 
 function App() {
-
   return (
-    <>
-      <h1>그리디 미션 : 뉴스 웹 뷰어 시이작!</h1>
-    </>
-  )
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/:category?" element={<NewsPage />} />
+        <Route path="*" element={<NotFoundLayout />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;

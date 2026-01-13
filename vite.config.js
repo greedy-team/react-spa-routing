@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+// eslint-disable-next-line import/no-unresolved
+import tailwindcss from '@tailwindcss/vite';
+/* eslint-disable import/no-extraneous-dependencies */
+import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    tailwindcss(),
+    svgr(),
+  ],
+});
